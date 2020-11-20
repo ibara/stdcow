@@ -60,3 +60,16 @@ sub print_d32(value: int32) is
 	var pe := IToA(value, 10, &buffer[0]);
 	print(&buffer[0]);
 end sub;
+
+# Random Number Generator
+# Implemented from https://apps.dtic.mil/dtic/tr/fulltext/u2/a134558.pdf
+# This is Program 3, Linear Congruential Generator, found on page 8.
+# Uses GCC's values for m, a, and c.
+sub Random(seed: int32): (result: int32) is
+	seed := 1103515245 * seed + 12345;
+	if seed < 0 then
+		seed := seed + 2147483648 + 12345;
+	end if;
+
+	result := seed;
+end sub;
