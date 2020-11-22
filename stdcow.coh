@@ -61,15 +61,26 @@ sub print_d32(value: int32) is
 	print(&buffer[0]);
 end sub;
 
-# Random Number Generator
-# Implemented from https://apps.dtic.mil/dtic/tr/fulltext/u2/a134558.pdf
-# This is Program 3, Linear Congruential Generator, found on page 8.
-# Uses GCC's values for m, a, and c.
-sub Random(seed: int32): (result: int32) is
-	seed := 1103515245 * seed + 12345;
-	if seed < 0 then
-		seed := seed + 2147483648 + 12345;
+# Read in a string.
+sub GetString(s: [uint8], size: uint8) is
+	var c: uint8;
+	var i: uint8 := 0;
+
+	if size == 0 then
+		return;
 	end if;
 
-	result := seed;
+	while i < (size - 1) loop
+		c := get_char();
+		if c == 10 or c == 13 then
+			break;
+		end if;
+
+		[s] := c;
+		s := s + 1;
+
+		i := i + 1;
+	end loop;
+
+	[s] := 0;
 end sub;
